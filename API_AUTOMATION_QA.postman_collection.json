@@ -1,0 +1,718 @@
+{
+	"info": {
+		"_postman_id": "1a0a1110-0bf2-498c-b0a7-3717bb304440",
+		"name": "API_AUTOMATION_QA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27162487"
+	},
+	"item": [
+		{
+			"name": "Test_order",
+			"item": [
+				{
+					"name": "Test_new_order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test new order\r",
+									"\r",
+									"pm.test(\"Test should have a status code is 201 created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Test should have a response time is less than 800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+									"});\r",
+									"pm.test(\"Test should have a field status open\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql('open');\r",
+									"});\r",
+									"pm.test(\"Test should include to response ID\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"});\r",
+									"pm.test(\"Test should include to response customer\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"customer\");\r",
+									"});\r",
+									"pm.test(\"Test should include to response address\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"address\");\r",
+									"});\r",
+									"pm.test(\"Test should hava header content Date\", function () {\r",
+									"    pm.response.to.have.header(\"Date\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customer\": \"admin\",\r\n  \"address\": \"C/admin Nºadmin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/order/new",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"order",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test_add_product_order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test to validate add product in order\r",
+									"\r",
+									"pm.test(\"Test should have a status code is 201 created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Test to response time is less than 2000ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+									"});\r",
+									"// Arrays examples test\r",
+									"pm.test(\"Test to validate Array field\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData[0].order).to.eql(72349);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"productId\": \"72349\",\r\n  \"amount\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/order/72349/product",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"order",
+								"72349",
+								"product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test_order_ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test to validate get order by ID\r",
+									"\r",
+									"pm.test(\"Test should have a status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Test shouldesponse time is less than 800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+									"});\r",
+									"pm.test(\"Test should have a field ID\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.order.id).to.eql(72403);\r",
+									"});\r",
+									"pm.test(\"Test should have a header Date\", function () {\r",
+									"    pm.response.to.have.header(\"Date\");\r",
+									"});\r",
+									"pm.test(\"Test should have field\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"items\");\r",
+									"});\r",
+									"pm.test(\"Test should have field\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"summary\");\r",
+									"});\r",
+									"pm.test(\"Test should have a field totalCost\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.summary.totalCost).to.eql(0);\r",
+									"});\r",
+									"pm.test(\"Test should have a field totalItems\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.summary.totalItems).to.eql(0);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/order/72403",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"order",
+								"72403"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Test_catalog",
+			"item": [
+				{
+					"name": "Test_catalog",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test to validate catalog\r",
+									"\r",
+									"pm.test(\"Test should have status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Test shouls have response time is less than 800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+									"});\r",
+									"pm.test(\"Test should have a header Date\", function () {\r",
+									"    pm.response.to.have.header(\"Date\");\r",
+									"});\r",
+									"pm.test(\"Test should validate first category\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.categories[0].category).to.eql(\"\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/catalog/categories",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"catalog",
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test_catalog_getAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test to get all product in store\r",
+									"\r",
+									"pm.test(\"Test should have a status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Test should have a response time is less than 800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+									"});\r",
+									"pm.test(\"Test products should have a field id\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.products[0].id).to.eql(882185);\r",
+									"});\r",
+									"pm.test(\"Test products should have a field name\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.products[0].name).to.eql('Pen');\r",
+									"});\r",
+									"pm.test(\"Test products should have a field category empty\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.products[0].category).to.eql('');\r",
+									"});\r",
+									"pm.test(\"Test should have a object products\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"products\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/catalog/products?limit=20&skip=20",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"catalog",
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								},
+								{
+									"key": "skip",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test_catalog_products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test should have atatus code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Test should have response time is less than 1600ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(1600);\r",
+									"});\r",
+									"pm.test(\"Test should have a field products\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.products[0].name).to.eql('laptopo');\r",
+									"});\r",
+									"pm.test(\"Test should have a field id\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.products[0].id).to.eql(883595);\r",
+									"});\r",
+									"pm.test(\"Test should have a category field\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.products[0].category).to.eql('computers');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/catalog/category/computers/products?limit=10&skip=10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"catalog",
+								"category",
+								"computers",
+								"products"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "skip",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test_catalog_product_id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test to validate product ID\r",
+									"\r",
+									"pm.test(\"Test should have a status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Test should have a response time is less than 800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+									"});\r",
+									"pm.test(\"Person is Jane\", function() {\r",
+									"  const responseJson = pm.response.json();\r",
+									"  pm.expect(responseJson.id).to.eql(883595);\r",
+									"  pm.expect(responseJson.name).to.eql('laptopo');\r",
+									"  pm.expect(responseJson.status).to.eq('active')\r",
+									"  pm.expect(responseJson.tags).to.eq('Software')\r",
+									"});\r",
+									"pm.test(\"Test should have an object\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.be.an(\"object\");\r",
+									"});\r",
+									"pm.test(\"Test should have content a header Date\", function () {\r",
+									"    pm.response.to.have.header('Date');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// Variables dynamics\r",
+									"//pm.globals.set('name', pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+									"//pm.globals.set('created', pm.variables.replaceIn('{{$randomDateRecent}}'))\r",
+									"//pm.globals.set('description', pm.variables.replaceIn('{{$randomLoremSentence}}'))\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNhbWVsaWEiLCJzdWIiOjg3NywiaWF0IjoxNjg4NTQ4ODY2LCJleHAiOjE2ODg1NDk0NjZ9.8wHsUIS2a4tNI49JoY1gHSpamevBwI7RQAVQSRlUsUE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "TOKEN_ADMIN",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjo0MzEsImlhdCI6MTY4ODYzMTQwMSwiZXhwIjoxNjg4NjMyMDAxfQ.rivQ2ZaIcUIc72g6QEw3VBQSoQVMh_dTelXgVM-HseI",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 883595,\r\n    \"name\": \"{{name}}\",\r\n    \"description\": \"{{description}}\",\r\n    \"manufacturer\": \"Mac\",\r\n    \"category\": \"computers\",\r\n    \"price\": 1800000,\r\n    \"created\": \"{{created}}\",\r\n    \"status\": \"active\",\r\n    \"tags\": \"Software\"\r\n}\r\n\r\n\r\n\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/catalog/product/883595",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"catalog",
+								"product",
+								"883595"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjo0MzEsImlhdCI6MTY4ODYzMTQwMSwiZXhwIjoxNjg4NjMyMDAxfQ.rivQ2ZaIcUIc72g6QEw3VBQSoQVMh_dTelXgVM-HseI",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Test_auth",
+			"item": [
+				{
+					"name": "Test_auth_login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//Test to validate auth login\r",
+									"\r",
+									"pm.test(\"Test should have status code is 201 created\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"pm.test(\"Test should have a response time is less than 800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+									"});\r",
+									"pm.test(\"Test should have a content response access_token\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"access_token\");\r",
+									"});\r",
+									"pm.test(\"Test should have a content header Date\", function () {\r",
+									"    pm.response.to.have.header(\"Date\");\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Test_auth_profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Test to validate profile user\r",
+									"// access_token => eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0cmluZyIsInN1YiI6NDMwLCJpYXQiOjE2ODg1NDQ3OTQsImV4cCI6MTY4ODU0NTM5NH0.ONt2Rg4F_rwJEFbepKc2tXoMYrSR7kZGB3NkzEOOMAA\r",
+									"\r",
+									"pm.test(\"Test should have a status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Test should have a response time is less than 800ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(800);\r",
+									"});\r",
+									"pm.test(\"Test should have a field status active\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.status).to.eql('active');\r",
+									"});\r",
+									"pm.test(\"Test should have a field ID\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+									"});\r",
+									"pm.test(\"Test should have a field created\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"created\");\r",
+									"});\r",
+									"pm.test(\"Test should have a field username\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"username\");\r",
+									"});\r",
+									"pm.test(\"Test should have a header field Date\", function () {\r",
+									"    pm.response.to.have.header(\"Date\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjo0MzEsImlhdCI6MTY4ODYzMTQwMSwiZXhwIjoxNjg4NjMyMDAxfQ.rivQ2ZaIcUIc72g6QEw3VBQSoQVMh_dTelXgVM-HseI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "TOKEN_ADMIN",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwic3ViIjo0MzEsImlhdCI6MTY4ODYzMTQwMSwiZXhwIjoxNjg4NjMyMDAxfQ.rivQ2ZaIcUIc72g6QEw3VBQSoQVMh_dTelXgVM-HseI",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/auth/me",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"auth",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNhbWVsaWEiLCJzdWIiOjg3NywiaWF0IjoxNjg4NTQ4ODY2LCJleHAiOjE2ODg1NDk0NjZ9.8wHsUIS2a4tNI49JoY1gHSpamevBwI7RQAVQSRlUsUE",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "URL",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "TOKEN_ADMIN",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
